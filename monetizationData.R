@@ -56,7 +56,8 @@ deployment_revenue$deployment <- factor(
                                              "1.19", 
                                              "1.20",
                                              "1.21",
-                                             "1.22"  
+                                             "1.22",
+                                             "1.23"  
                                             ))
 
 
@@ -119,7 +120,8 @@ spender_percent$acquisition_deployment <- factor(
                                           "1.19", 
                                           "1.20",
                                           "1.21",
-                                          "1.22"  
+                                          "1.22",
+                                          "1.23"   
                                          ))
 
 # spend_deployment factor 
@@ -134,8 +136,9 @@ spender_percent$spend_deployment <- factor(
                                                      "1.19", 
                                                      "1.20",
                                                      "1.21",
-                                                     "1.22"  
-  ))
+                                                     "1.22",
+                                                     "1.23"  
+                                                  ))
 
 # spent period factor 
 # spender_percent$spent_28_day_bucket_f <- factor(spender_percent$spent_28_day_bucket,
@@ -174,7 +177,8 @@ percent_ever_spent$deployment <- factor(
                                            "1.19", 
                                            "1.20",
                                            "1.21",
-                                           "1.22"  
+                                           "1.22",
+                                           "1.23"  
                                            ))
 
 
@@ -347,8 +351,9 @@ percent_ever_spent$deployment <- factor(
                                             "1.19", 
                                             "1.20",
                                             "1.21",
-                                            "1.22"  
-  ))
+                                            "1.22",
+                                            "1.23"  
+                                       ))
 
 ##============================================
 ## ARPPU / ARPDAU by trailing 30 days (g_arppu_trailing30)
@@ -433,7 +438,8 @@ spenders_active_status$deployment <- factor(
                                                 "1.19", 
                                                 "1.20",
                                                 "1.21",
-                                                "1.22"  
+                                                "1.22",
+                                                "1.23"  
                                                 ))
 
 

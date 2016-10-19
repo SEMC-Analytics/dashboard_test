@@ -119,9 +119,9 @@ body <- dashboardBody(
                                             choices = list("1.16" = "1.16", "1.17" = "1.17",
                                                            "1.18" = "1.18", "1.19" = "1.19",
                                                            "1.20" = "1.20", "1.21" = "1.21",
-                                                           "1.22" = "1.22"
+                                                           "1.22" = "1.22", "1.23" = "1.23"
                                                            ),
-                                            selected = c("1.16", "1.17", "1.18", "1.19", "1.20", "1.21", "1.22"),
+                                            selected = c("1.16", "1.17", "1.18", "1.19", "1.20", "1.21", "1.22", "1.23"),
                                             inline = TRUE), solidHeader = T, status = "primary"),
                          bsTooltip("check_box_group_2_acquisition", "Select one or more deployments to filter on.",
                                    "bottom", options = list(container = "body"))                  
@@ -188,9 +188,9 @@ body <- dashboardBody(
                                             choices = list("1.16" = "1.16", "1.17" = "1.17",
                                                            "1.18" = "1.18", "1.19" = "1.19",
                                                            "1.20" = "1.20", "1.21" = "1.21",
-                                                           "1.22" = "1.22"
+                                                           "1.22" = "1.22", "1.23" = "1.23"
                                             ),
-                                            selected = c("1.16", "1.17", "1.18", "1.19", "1.20", "1.21", "1.22"),
+                                            selected = c("1.16", "1.17", "1.18", "1.19", "1.20", "1.21", "1.22", "1.23"),
                                             inline = TRUE), solidHeader = T, status = "primary"),
                         bsTooltip("check_box_group_2_activity", "Select one or more deployments to filter on.",
                                   "bottom", options = list(container = "body"))                
@@ -228,10 +228,11 @@ body <- dashboardBody(
                                                             "1.15" = "1.15", "1.16" = "1.16",
                                                             "1.17" = "1.17", "1.18" = "1.18", 
                                                             "1.19" = "1.19", "1.20" = "1.20", 
-                                                            "1.21" = "1.21", "1.22" = "1.22"
+                                                            "1.21" = "1.21", "1.22" = "1.22",
+                                                            "1.23" = "1.23"
                                              ),
                                              selected = c("Prior to 1.13", "1.13", "1.14", "1.15", "1.16", "1.17", "1.18", 
-                                                          "1.19", "1.20", "1.21", "1.22"),
+                                                          "1.19", "1.20", "1.21", "1.22", "1.23"),
                                              inline = TRUE), solidHeader = T, status = "primary")),
                           bsTooltip("check_box_group_2_activity_a", "Select one or more deployments to filter on.",
                                     "bottom", options = list(container = "body")),       
@@ -341,9 +342,9 @@ body <- dashboardBody(
                                             choices = list("1.16" = "1.16", "1.17" = "1.17",
                                                            "1.18" = "1.18", "1.19" = "1.19",
                                                            "1.20" = "1.20", "1.21" = "1.21",
-                                                           "1.22" = "1.22"
+                                                           "1.22" = "1.22", "1.23" = "1.23"
                                             ),
-                                            selected = c("1.16", "1.17", "1.18", "1.19", "1.20", "1.21", "1.22"),
+                                            selected = c("1.16", "1.17", "1.18", "1.19", "1.20", "1.21", "1.22", "1.23"),
                                             inline = TRUE), status = "primary"),
                      bsTooltip("check_box_group_2_monetization", "Select one or more deployments to filter on.",
                                "bottom", options = list(container = "body"))                       
@@ -421,7 +422,7 @@ body <- dashboardBody(
                          title="Churned Users Average Lifetime  (7 day lag)", solidHeader = T, status = "primary")),
               column(width=6,
                      box(width=NULL, plotOutput("g_churned_users_lifetime_weeks", height = "300px"),
-                         title="Churned Users by Lifetime Weeks  (7 day lag)", solidHeader = T, status = "primary"))              
+                         title="Churned Users by Lifetime Weeks (7 day lag)", solidHeader = T, status = "primary"))              
             ), # end of row 
             fluidRow(            
             column(width = 2,
@@ -518,9 +519,9 @@ body <- dashboardBody(
                                      choices = list("1.16" = "1.16", "1.17" = "1.17",
                                                     "1.18" = "1.18", "1.19" = "1.19",
                                                     "1.20" = "1.20", "1.21" = "1.21",
-                                                    "1.22" = "1.22"
+                                                    "1.22" = "1.22", "1.23" = "1.23"
                                      ),
-                                     selected = c("1.16", "1.17", "1.18", "1.19", "1.20", "1.21", "1.22"),
+                                     selected = c("1.16", "1.17", "1.18", "1.19", "1.20", "1.21", "1.22", "1.23"),
                                      inline = TRUE), solidHeader = T, status = "primary"),
               bsTooltip("check_box_group_retention_and_reactivation", "Select one or more deployments to filter on.",
                         "bottom", options = list(container = "body"))              
@@ -831,9 +832,9 @@ body <- dashboardBody(
                                             choices = list("1.16" = "1.16", "1.17" = "1.17",
                                                            "1.18" = "1.18", "1.19" = "1.19",
                                                            "1.20" = "1.20", "1.21" = "1.21",
-                                                           "1.22" = "1.22"
+                                                           "1.22" = "1.22", "1.23" = "1.23"
                                             ),
-                                            selected = c("1.16", "1.17", "1.18", "1.19", "1.20", "1.21", "1.22"),
+                                            selected = c("1.16", "1.17", "1.18", "1.19", "1.20", "1.21", "1.22", "1.23"),
                                             inline = TRUE), solidHeader = T, status = "primary"),
                      bsTooltip("check_box_group_multi_ltv_2", "Select one or more deployments to filter on.",
                                "bottom", options = list(container = "body")),

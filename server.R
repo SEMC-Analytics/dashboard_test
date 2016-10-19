@@ -17,12 +17,12 @@ library(scales)
 shinyServer(
   function(input, output, session){
      # source("ascensionData.R")
-     # source("acquisitionData.R")
+     source("acquisitionData.R")
      # source("activityData.R")
      # source("churnData.R")
      # source("engagementData.R")
      # source("helpers.R")
-     source("monetizationData.R")
+     # source("monetizationData.R")
      # source("pingData.R")
      # source("reactivationData.R")
      # source("retentionData.R")
@@ -66,31 +66,66 @@ shinyServer(
 ## Overall Acquired Users (g_acquired_overall & g_ )
 ## Acquistion  
 ##============================================ 
-  # acquired_overall_data <- reactive({
-  #   data <- acquired_overall[deployment %in% input$check_box_group_2_acquisition]
-  #   return(data)
-  # })
+  acquired_overall_data <- reactive({
+    data <- acquired_overall[deployment %in% input$check_box_group_2_acquisition]
+    return(data)
+  })
+  
+  labels_acquired_overall <- reactive({
+    labels <- acquired_overall[deployment %in% input$check_box_group_2_acquisition]$engagement_status_28
+    labels <- as.vector(labels)
+    labels <- si_notation(labels)
+    return(labels)
+  })
+
+  label_positions_acquired_overall <- reactive({
+    positions <- acquired_overall[deployment %in% input$check_box_group_2_acquisition]$label_position
+    positions <- as.vector(positions)
+    return(positions)
+  })
   
   output$g_acquired_overall <- renderPlot({
-    g <- ggplot(acquired_overall,
+    g <- ggplot(acquired_overall_data(),
                 aes(x = deployment,
                     y = engagement_status_28,
                     fill = status_f,
                     order = status_f))
-    g <- g + geom_bar(stat = "identity") + 
+    g <- g + geom_bar(stat = "identity") +
       labs(x = "Deployment",
-           y = "Total Acquired Users") + 
-      theme(legend.position = "bottom",
-            legend.title = element_blank()) + 
-      scale_y_continuous(labels = si_notation) + 
-      geom_text(data = acquired_overall, 
-                aes(x = deployment, 
-                    y = pos,
-                    label = paste0(si_notation(engagement_status_28))),
-                    check_overlap = TRUE
-                  )      
-    print(g) 
-  })
+           y = "Total Acquired Users") +
+      theme(legend.position = "bottom", 
+            legend.title = element_blank()) +
+      scale_y_continuous(labels = si_notation) +
+      geom_text(aes(label = labels_acquired_overall(),
+                    y = label_positions_acquired_overall(),
+                    size = 3,
+                    # hjust = 0.5,
+                    # vjust = 3,
+                    position =     "stack"))
+    
+    print(g)
+  })  
+  
+  # output$g_acquired_overall <- renderPlot({
+  #   g <- ggplot(acquired_overall,
+  #               aes(x = deployment,
+  #                   y = engagement_status_28,
+  #                   fill = status_f,
+  #                   order = status_f))
+  #   g <- g + geom_bar(stat = "identity") + 
+  #     labs(x = "Deployment",
+  #          y = "Total Acquired Users") + 
+  #     theme(legend.position = "bottom",
+  #           legend.title = element_blank()) + 
+  #     scale_y_continuous(labels = si_notation) + 
+  #     geom_text(data = acquired_overall, 
+  #               aes(x = deployment, 
+  #                   y = pos,
+  #                   label = paste0(si_notation(engagement_status_28))),
+  #                   check_overlap = TRUE
+  #                 )      
+  #   print(g) 
+  # })
   
   addPopover(session, "g_acquired_overall", "Data Definition", 
              content = paste0("Installs grouped by engagement status and the deployment they installed during. ",
@@ -98,27 +133,63 @@ shinyServer(
                               "28 day deployment period they installed during. ",
                               "Time period is March 30, 2016 to present. "), trigger = 'hover')  
   
+  labels_acquired_overall_2 <- reactive({
+    labels <- acquired_overall[deployment %in% input$check_box_group_2_acquisition]$engagement_status_28
+    labels <- as.vector(labels)
+    labels <- si_notation(labels)
+    return(labels)
+  })
+  
+  label_positions_acquired_overall_2 <- reactive({
+    positions <- acquired_overall[deployment %in% input$check_box_group_2_acquisition]$label_position_pos
+    positions <- as.vector(positions)
+    return(positions)
+  })  
+  
   output$g_acquired_overall_percent <- renderPlot({
-    g <- ggplot(acquired_overall,
+    g <- ggplot(acquired_overall_data(),
                 aes(x = deployment,
-                    y = engagement_status_28_percent,
+                    y = engagement_status_28_percent, 
                     fill = status_f,
                     order = status_f
-                    ))
-    g <- g + geom_bar(stat = "identity") + 
+                ))
+    g <- g + geom_bar(stat = "identity") +
       labs(x = "Deployment",
-           y = "Total Acquired Users Percent") + 
+           y = "Total Acquired Users Percent") +
       theme(legend.position = "bottom",
-            legend.title = element_blank()) + 
+            legend.title = element_blank()) +
       scale_y_continuous(labels = percent_notation_large) + 
-      geom_text(data = acquired_overall, 
-                aes(x = deployment, 
-                    y = pos_percent,
-                    label = paste0(engagement_status_28_percent, "%"),
-                    check_overlap = TRUE                    
-                   ))
-    print(g) 
-  })  
+    geom_text(aes(label = labels_acquired_overall_2(),
+                  y = label_positions_acquired_overall_2(),
+                  size = 3,
+                  # hjust = 0.5,
+                  # vjust = 3,
+                  position = "stack"))
+
+    print(g)
+  })
+  
+  # output$g_acquired_overall_percent <- renderPlot({
+  #   g <- ggplot(acquired_overall,
+  #               aes(x = deployment,
+  #                   y = engagement_status_28_percent,
+  #                   fill = status_f,
+  #                   order = status_f
+  #                   ))
+  #   g <- g + geom_bar(stat = "identity") +
+  #     labs(x = "Deployment",
+  #          y = "Total Acquired Users Percent") +
+  #     theme(legend.position = "bottom",
+  #           legend.title = element_blank()) +
+  #     scale_y_continuous(labels = percent_notation_large) +
+  #     geom_text(data = acquired_overall,
+  #               aes(x = deployment,
+  #                   y = pos_percent,
+  #                   label = paste0(engagement_status_28_percent, "%"),
+  #                   check_overlap = TRUE
+  #                  ))
+  #   print(g)
+  # })
 
 ##============================================  
 ## Acquired Users by Country (g_acquired_country)
@@ -129,14 +200,26 @@ shinyServer(
     return(data)
   })
   
+  # labels_acquired_country <- reactive({
+  #   labels <- acquired_country[country %in% input$check_box_group_acquisition]$engagement_status_28
+  #   labels <- as.vector(labels)
+  #   labels <- si_notation(labels)
+  #   return(labels)
+  # })
+  # 
+  # label_positions_acquired_country <- reactive({
+  #   positions <- acquired_country[country %in% input$check_box_group_acquisition]$engagement_status_28
+  #   positions <- as.vector(positions)
+  #   return(positions)
+  # })
+  
   output$g_acquired_country <- renderPlot({
     g <- ggplot(acquired_country_data(),
                 aes(x = country,
                     y = engagement_status_28,
                     fill = country
-                    #,label = acquired_country_data$engagement_status_28
                     )) +
-      geom_bar(stat="identity") + 
+      geom_bar(stat="identity") + #, position = "dodge"
       facet_grid(. ~ status_f,
                  switch = 'x') +
       labs(x = "Status",
@@ -145,14 +228,15 @@ shinyServer(
             legend.position = "bottom",
             axis.text.x = element_text(angle = 45,
                                        hjust = 1)) +
-      scale_y_continuous(labels = si_notation) 
-      # + geom_text(data = acquired_country_data(),
-      #           aes(label = engagement_status_28,
-      #               x = country,
-      #               y = engagement_status_28),
-      #           #stat="identity",
-      #           position = position_dodge(width = 1)
-      #           )
+      scale_y_continuous(labels = si_notation) #+
+      # geom_text(aes(label = labels_acquired_country(),
+      #               #y = label_positions_acquired_country(),
+      #               #x = interaction(status_f, country),
+      #               size = 3,
+      #               position = "dodge" 
+      #               # hjust = 0.5,
+      #               # vjust = 3
+      #               ))
 
     print(g)
   })
@@ -1996,7 +2080,31 @@ shinyServer(
      print(g)
    })      
    
+   ##==============================================================
+   ## 7 Day Moving Avg LTV by Country, Deployment and OS Name (g_multi_level_ltv) 
+   ## Side by Side comparison of LTV: allows countries to be be compared by deployment and OS 
+   ## 
+   ##==============================================================     
    
+   #load chart 
+   # g_skins_by_minutes_b <- ggplot(country_days_ltv, 
+   #                                aes(x = days_since_install,
+   #                                    y = cohort_ltv,
+   #                                    color = country,
+   #                                    group = spender_status
+   #                                ))
+   # #create chart 
+   # g_skins_by_minutes_b + 
+   #   geom_jitter(aes(size = user_count, 
+   #                   color = country)) + 
+   #   geom_smooth() + 
+   #   facet_grid(. ~ country,
+   #              switch = 'X') + 
+   #   ggtitle("Skins Owned By Minutes Played") + 
+   #   labs(x = "Skins Owned Count", y = "Minutes Played Count") +
+   #   theme(legend.position="bottom") + 
+   #   theme(axis.text.x = element_text(size = 10, angle = 00)) #
+   # 
    
 })  ## end of server function 
 ##==========================================================================================  

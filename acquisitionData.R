@@ -46,7 +46,8 @@ install_country$deployment <- factor(
                                           "1.19", 
                                           "1.20",
                                           "1.21",
-                                          "1.22"                                        
+                                          "1.22",
+                                          "1.23"                                         
                                          ))
 
 
@@ -89,22 +90,34 @@ acquired_overall$deployment <- factor(
                                           "1.19", 
                                           "1.20",
                                           "1.21",
-                                          "1.22"  
+                                          "1.22",
+                                          "1.23"   
                                           ))
 # arrange data (stacks in consistent order in bar plots)
 acquired_overall <- arrange(acquired_overall, status_f)
 
+# make back into a data table
+acquired_overall <- data.table(acquired_overall)
+
 head(acquired_overall)
 str(acquired_overall)
 
-#make pos value for positioning labels in 100% stacked bar chart 
-acquired_overall <-  
-  ddply(acquired_overall, 
-        .(deployment), 
-        transform, 
-        pos = cumsum(engagement_status_28) - (0.5 * engagement_status_28),
-        pos_percent = cumsum(engagement_status_28_percent) - (0.5 * engagement_status_28_percent)
-        )
+# #make pos value for positioning labels in 100% stacked bar chart 
+# acquired_overall <-  
+#   ddply(acquired_overall, 
+#         .(deployment), 
+#         transform, 
+#         pos = cumsum(engagement_status_28) - (0.5 * engagement_status_28),
+#         pos_percent = cumsum(engagement_status_28_percent) - (0.5 * engagement_status_28_percent)
+#         )
+# # make back into a data table
+# acquired_overall <- data.table(acquired_overall)
+
+# #make label_position for positioning labels in 100% stacked bar chart
+acquired_overall[,label_position := cumsum(engagement_status_28)-0.5*engagement_status_28, 
+                 by = deployment]
+acquired_overall[,label_position_pos := cumsum(engagement_status_28_percent)-0.5*engagement_status_28_percent,
+                 by = deployment]
 
 
 ##============================================
@@ -133,7 +146,7 @@ engagement_status_all <- data.table(engagement_status_all)
 ## Acquired Users by Country Table (g_acquired_country)
 ##============================================
 sql_acquired_country <- "Select
-      'Total' as country
+'Total' as country
 ,status
 ,engagement_status_28
 ,engagement_status_28_percent
@@ -170,14 +183,13 @@ acquired_country <- data.table(acquired_country)
 sql_spender_conversion_engagement_unlimited <-
   "Select
 country
-,lifetime_28_day_bucket
 ,engagement_status_total
 ,deployment
 ,Spender_Count
 ,Non_Spender_Count
 ,Spender_Conversion
-from acquired_unlimited_spend_conversion_main
-Group By 1,2,3,4,5,6,7
+from acquired_unlimited_spend_conversion_main_N
+Group By 1,2,3,4,5,6
 Order By 1,2,3"
 
 spender_conversion_engagement_unlimited <- dbGetQuery(conn, paste("SET search_path = app139203;",
@@ -205,7 +217,8 @@ spender_conversion_engagement_unlimited$deployment <- factor(
                                                                 "1.19", 
                                                                 "1.20",
                                                                 "1.21",
-                                                                "1.22"  
+                                                                "1.22",
+                                                                "1.23" 
                                                                 ))
 
 
@@ -214,15 +227,14 @@ spender_conversion_engagement_unlimited$deployment <- factor(
 #  Last 28 day time frame
 ##============================================
 sql_spender_conversion_engagement_28 <- "Select
-country
-,lifetime_28_day_bucket
-,engagement_status_total
-,deployment
-,Spender_Count
-,Non_Spender_Count
-,Spender_Conversion
-from acquired_28_day_spend_conversion_main
-Group By 1,2,3,4,5,6,7
+country  
+,engagement_status_total   
+,deployment    
+,Spender_Count  
+,Non_Spender_Count       
+,Spender_Conversion 
+from acquired_28_day_spend_conversion_main_N
+Group By 1,2,3,4,5,6
 Order By 1,2,3"
 
 spender_conversion_engagement_28 <- dbGetQuery(conn, paste("SET search_path = app139203;",
@@ -250,7 +262,8 @@ spender_conversion_engagement_28$deployment <- factor(
                                                            "1.19", 
                                                            "1.20",
                                                            "1.21",
-                                                           "1.22"  
+                                                           "1.22",
+                                                           "1.23" 
                                                           ))
 
 
@@ -263,7 +276,7 @@ sql_engagement_28_acquisition <- "Select
 ,status
 ,engagement_status_28
 ,engagement_status_28_percent
-From acquired_users_active_status
+From acquired_users_active_status_N
 Where status <> 'Acquired'
 Union
 Select
@@ -272,9 +285,8 @@ country
 ,status
 ,engagement_status_28
 ,engagement_status_28_percent
-From acquired_users_active_status_country
-Where status <> 'Acquired'
-"
+From acquired_users_active_status_country_N
+Where status <> 'Acquired'"
 
 engagement_28_acquisition <- dbGetQuery(conn, paste("SET search_path = app139203;",
                                                     sql_engagement_28_acquisition,
@@ -302,7 +314,8 @@ engagement_28_acquisition$deployment <- factor(
                                                     "1.19", 
                                                     "1.20",
                                                     "1.21",
-                                                    "1.22"  
+                                                    "1.22",
+                                                    "1.23"   
                                                    ))
 
 

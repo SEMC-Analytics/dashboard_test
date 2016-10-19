@@ -77,6 +77,8 @@ churned_users_lifetime_weeks <- arrange(churned_users_lifetime_weeks, weeks_sinc
 #re-order data.table by factor field (eg weeks_since_install_buckets_f)
 churned_users_lifetime_weeks <- churned_users_lifetime_weeks[order(churned_users_lifetime_weeks$weeks_since_install_buckets_f), ]
 
+# make back into a data table 
+churned_users_lifetime_weeks <- data.table(churned_users_lifetime_weeks)
 
 ##============================================
 ## Churned Users by LTD Engagement Status

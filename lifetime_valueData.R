@@ -69,6 +69,25 @@ multi_level_ltv$os_name <- factor(
                                          "android"))
 
 
+##============================================
+##  (g_ltv_7_day_moving_avg)
+##============================================
+
+sql_country_days_ltv <- 
+"Select 
+country 
+,days_since_install 
+,cohort_ltv
+From country_ltv
+Group By 1,2,3"
+
+country_days_ltv <- dbGetQuery(conn, paste("SET search_path = app139203;",
+                                          sql_country_days_ltv, sep = ""))
+
+head(country_days_ltv) 
+#data.table 
+country_days_ltv <- data.table(country_days_ltv)
+
 
 ## Disconnect from server 
 dbDisconnect(conn)

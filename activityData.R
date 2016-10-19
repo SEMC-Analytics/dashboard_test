@@ -45,7 +45,7 @@ dau_active_status <- dbGetQuery(conn, paste("SET search_path = app139203;",sql_d
 # data table
 dau_active_status <- data.table(dau_active_status)
 # arrange data
-dau_active_status <- arrange(dau_active_status, event_date, active_status)
+dau_active_status <- setorder(dau_active_status, event_date, active_status)
 
 
 ##============================================
@@ -74,7 +74,7 @@ dau_status_country$user_status_f <- factor(
                                              "existing user",
                                              "legacy"))
 # arrange data
-dau_status_country <- arrange(dau_status_country, event_date, user_status_f)
+dau_status_country <- setorder(dau_status_country, event_date, user_status_f)
 
 # data table 
 dau_status_country = data.table(dau_status_country)
@@ -126,7 +126,8 @@ mau_status_deployment$deployment <- factor(
                                                "1.19", 
                                                "1.20",
                                                "1.21",
-                                               "1.22"  
+                                               "1.22",
+                                               "1.23"  
                                                ))
 
 
@@ -176,13 +177,17 @@ dau_deployment_active_status$deployment <- factor(
                                                        "1.19", 
                                                        "1.20",
                                                        "1.21",
-                                                       "1.22"  
+                                                       "1.22",
+                                                       "1.23"  
                                                         ))
 
 # arrange data
-dau_deployment_active_status <- arrange(dau_deployment_active_status,
+dau_deployment_active_status <- setorder(dau_deployment_active_status,
                                          deployment_active_status,
                                          -user_count)
+
+# make back into a data table 
+dau_deployment_active_status <- data.table(dau_deployment_active_status)
 
 #remove NAs 
 #dau_deployment_active_status <- dau_deployment_active_status[complete.cases(dau_deployment_active_status),]
@@ -209,7 +214,7 @@ dau_deployment_retention_status$deployment_retention_status <- factor(
   dau_deployment_retention_status$deployment_retention_status, levels = c("retained",
                                                                            "churned",
                                                                            "TBD"
-  ))
+                                                                          ))
 
 #correct the '1.2' labeling to '1.20' to selector works 
 dau_deployment_retention_status$deployment <- factor(dau_deployment_retention_status$deployment)
@@ -227,15 +232,19 @@ dau_deployment_retention_status$deployment <- factor(
                                                           "1.19", 
                                                           "1.20",
                                                           "1.21",
-                                                          "1.22"  
+                                                          "1.22",
+                                                          "1.23" 
                                                     ))
 
 #unique(dau_deployment_retention_status$deployment)
 
 # arrange data
-dau_deployment_retention_status <- arrange(dau_deployment_retention_status,
+dau_deployment_retention_status <- setorder(dau_deployment_retention_status,
                                             deployment_retention_status,
                                              -user_count)
+
+# make back into a data.table 
+dau_deployment_retention_status <- data.table(dau_deployment_retention_status)
 
 ##============================================
 ##  DAU by Acquired Deployment  (g_dau_acquired_deployment_data)
@@ -272,7 +281,8 @@ dau_acquired_deployment$acquired_deployment <- factor(dau_acquired_deployment$ac
                                                                  "1.19", 
                                                                  "1.20",
                                                                  "1.21",
-                                                                 "1.22"  
+                                                                 "1.22",
+                                                                 "1.23"  
                                                                 ))
 
 #make country a factor
@@ -298,18 +308,21 @@ dau_acquired_deployment$os_name <- factor(dau_acquired_deployment$os_name, level
 
 head(dau_acquired_deployment)
 
-dau_acquired_deployment <- arrange(dau_acquired_deployment,
+# dau_acquired_deployment <- arrange(dau_acquired_deployment,
+#                                    event_date,
+#                                    acquired_deployment,
+#                                    country,
+#                                    os_name)
+
+dau_acquired_deployment <- setorder(dau_acquired_deployment,
                                    event_date,
                                    acquired_deployment,
                                    country,
                                    os_name)
                                    
                                    
-# unique(dau_acquired_deployment$acquired_deployment)
-
-
-
-
+#make back into data.table 
+dau_acquired_deployment <- data.table(dau_acquired_deployment)
 
 
 

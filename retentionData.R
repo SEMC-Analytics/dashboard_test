@@ -72,7 +72,8 @@ active_retention$active_deployment <- factor(
                                          "1.19", 
                                          "1.20",
                                          "1.21",
-                                         "1.22"  
+                                         "1.22",
+                                         "1.23"  
                                          ))
 
 # Deployment factor 
@@ -87,8 +88,9 @@ active_retention$retained_deployment <- factor(
                                                  "1.19", 
                                                  "1.20",
                                                  "1.21",
-                                                 "1.22"  
-  ))
+                                                 "1.22",
+                                                 "1.23" 
+                                              ))
 
 #  retention factor 
 # active_retention$retained_28_day_bucket_f <- factor(
@@ -158,7 +160,8 @@ acquired_retention$acquired_deployment <- factor(
                                           "1.19", 
                                           "1.20",
                                           "1.21",
-                                          "1.22"  
+                                          "1.22",
+                                          "1.23"   
                                           ))
 
 # Retained Deployment factor
@@ -173,8 +176,9 @@ acquired_retention$retained_deployment <- factor(
                                                      "1.19", 
                                                      "1.20",
                                                      "1.21",
-                                                     "1.22"  
-  ))
+                                                     "1.22",
+                                                     "1.23"   
+                                                  ))
 
 # Retention factor 
 # acquired_retention$retained_28_day_bucket_f <- factor(
